@@ -1,23 +1,16 @@
 import React, { useState } from "react"
 
 function TipCalc() {
-  const [itemPrice, setItemPrice] = useState("")
-  const [taxAmount, setTaxAmount] = useState("")
-  const [tipAmount, setTipAmount] = useState("")
+  const [itemPrice, setItemPrice] = useState(0)
+  const [tipPercent, setTipPercent] = useState(0)
+  const [party, setParty] = useState(0)
 
-  const tipPercent = 0.15
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault()
-  //   setItemPrice()
-  // }
-
-  const total = itemPrice + taxAmount
-  console.log(itemPrice)
-  console.log(taxAmount)
-  console.log(total)
-
-  const finalTip = total * tipPercent
+  const totalTip = (parseInt(itemPrice) * parseInt(tipPercent)) / 100
+  const subTotal = parseInt(itemPrice) + totalTip
+  const individualPay = subTotal / parseInt(party)
+  console.log(totalTip)
+  console.log(subTotal)
+  console.log(individualPay)
 
   return (
     <div>
@@ -27,22 +20,30 @@ function TipCalc() {
       <input
         type="number"
         placeholder="item price"
-        name="item"
-        onChange={(e) => {
+        onChange={e => {
           setItemPrice(e.target.value)
         }}
       />
       <input
         type="number"
-        placeholder="totax amount"
-        name="tax"
-        onChange={(e) => {
-          setTaxAmount(e.target.value)
+        placeholder="Tip %"
+        onChange={e => {
+          setTipPercent(e.target.value)
+        }}
+      />
+      <input
+        type="number"
+        placeholder="Split Between"
+        onChange={e => {
+          setParty(e.target.value)
         }}
       />
       <input type="submit" />
 
-      <p>at 15%, you pay: ${finalTip} in tips</p>
+      <p>
+        The Subtotal is: ${subTotal} The party of {party} pays ${" "}
+        {individualPay.toFixed(2)}.
+      </p>
     </div>
   )
 }
